@@ -8,21 +8,23 @@ import Signup from './Components/Signup'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Create from './Components/Create'
 import Navbar from './Components/Navbar'
+import PollState from './Context/PollState'
 
 
 function App() {
   return (
     <>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Homepage />} />
-          <Route path='/Create' element={<Create />} />
-          <Route path='/Login' element={<Login />} />
-          <Route path='/Signup' element={<Signup />} />
-        </Routes>
-      </Router>
-
+      <PollState>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<Homepage />} />
+            <Route path='/Create' element={<Create />} />
+            <Route path='/Login' element={<Login />} />
+            <Route path='/Signup' element={<Signup />} />
+          </Routes>
+        </Router>
+      </PollState>
     </>
   )
 }
