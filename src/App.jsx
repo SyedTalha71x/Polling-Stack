@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Create from './Components/Create'
 import Navbar from './Components/Navbar'
 import PollState from './Context/PollState'
-
+import Dynamic from './Components/Dynamic'
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
             <Route path='/Create' element={<Create />} />
             <Route path='/Login' element={<Login />} />
             <Route path='/Signup' element={<Signup />} />
+            <Route path='/Dynamic/:id' element={<Dynamic />} />
           </Routes>
         </Router>
       </PollState>

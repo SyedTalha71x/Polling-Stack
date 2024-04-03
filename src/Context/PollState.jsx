@@ -12,6 +12,7 @@ const PollState = (props) => {
             let res = await fetch(url, {
                 method: 'POST',
                 headers: {
+                    'ngrok-skip-browser-warning': `false`,
                     'Content-Type': 'application/json',
                     'auth-token': localStorage.getItem('token')
                 },

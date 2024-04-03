@@ -27,6 +27,7 @@ const Signup = () => {
       const res = await fetch(url, {
         method: 'POST',
         headers: {
+          'ngrok-skip-browser-warning': `false`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)

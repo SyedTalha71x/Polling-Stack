@@ -2,6 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        setTimeout(() => {
+            window.location.href = 'http://localhost:5173/'
+        }, 1000);
+    }
     return (
         <div className='navbar flex justify-around cursor-pointer items-center shadow-full p-4 h-full w-full font-semibold text-black bg-white shadow-md'>
             <div className="left-nav">
@@ -16,9 +23,11 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="right-nav">
-                <Link to={"/Login"}>
-                    <button className='bg-blue-900 text-white py-2 px-8 text-center rounded-md'>Login</button>
-                </Link>
+                {localStorage.getItem('token') ?
+                    <button onClick={logout} className='bg-blue-900 text-white py-2 px-8 text-center rounded-md'>Logout</button>
+                    : <Link to={"/Login"}>
+                        <button className='bg-blue-900 text-white py-2 px-8 text-center rounded-md'>Login</button>
+                    </Link>}
             </div>
         </div>
     )
