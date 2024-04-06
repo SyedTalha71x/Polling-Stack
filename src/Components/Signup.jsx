@@ -35,6 +35,7 @@ const Signup = () => {
       await res.json();
       if (res.ok) {
         alert('Signup Successfully');
+        window.location.href = 'http://localhost:5173/Login'
       }
       else {
         alert('Signup Failed');

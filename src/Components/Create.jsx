@@ -65,7 +65,7 @@ const PollForm = () => {
             <label className="block mb-2">
                 Expiry Date:
                 <input
-                    type="text"
+                    type="datetime-local"
                     value={expirydate}
                     onChange={(e) => setexpirydate(e.target.value)}
                     className="block w-full mt-1 border-2 py-2 outline-none border-gray-400 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"

@@ -7,9 +7,9 @@ const Homepage = () => {
     const [selectedPoll, setSelectedPoll] = useState(null);
     const [selectedOption, setSelectedOption] = useState(null);
     const [alertMessage, setAlertMessage] = useState('');
+    const [selectedOptionIndex, setSelectedOptionIndex] = useState(null); // New state to track selected option index
 
     const BASE_URL = 'http://localhost:3001';
-
 
     useEffect(() => {
         const fetchPolls = async () => {
@@ -33,13 +33,13 @@ const Homepage = () => {
                     'Content-Type': 'application/json',
                     'auth-token': localStorage.getItem('token'),
                     'ngrok-skip-browser-warning': `false`
-
                 },
                 body: JSON.stringify({ pollId, optionindex: index })
             })
             if (res.ok) {
                 setSelectedPoll(pollId);
                 setSelectedOption(option);
+                setSelectedOptionIndex(index); // Update selected option index
                 setAlertMessage('Voted successfully!');
             }
         } catch (error) {
@@ -47,6 +47,8 @@ const Homepage = () => {
             setAlertMessage('Failed to vote. Please try again.');
         }
     };
+
+    let currentDate = new Date();
 
     return (
         <div className="container mx-auto">
@@ -73,20 +75,20 @@ const Homepage = () => {
                             <p>Category: {poll.category}</p>
                             <p>State: {poll.state}</p>
                             <p>Expiry Date: {new Date(poll.expirydate).toLocaleDateString()}</p>
-                            <div className="text-xl font-bold mt-2">
-                                Vote Below!
-                            </div>
-                            <div className="mt-2">
+                            {(currentDate > new Date(poll.expirydate)) ? <div className="text-xl font-bold mt-2">
+                                Vote has been Expired
+                            </div> : <div className='text-xl font-bold mt-2'>Vote Now!</div>}
+                            {(currentDate < new Date(poll.expirydate)) && poll.options && <div className="mt-2">
                                 {poll.options.map((option, index) => (
                                     <button
                                         key={index}
-                                        className={`py-2 px-4 mr-2 ${selectedPoll === poll._id && selectedOption === option.newoptions ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} rounded`}
+                                        className={`py-2 px-4 mr-2 ${selectedPoll === poll._id && selectedOptionIndex === index ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} rounded`}
                                         onClick={() => handleOptionClick(poll._id, option.newoptions, index)}
                                     >
                                         {option.newoptions}
                                     </button>
                                 ))}
-                            </div>
+                            </div>}
                         </div>
                     ))
                 ) : (

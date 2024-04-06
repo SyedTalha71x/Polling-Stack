@@ -42,6 +42,10 @@ export const voteonPoll = async (req, res) => {
         if (!poll) {
             return res.status(400).json({ message: 'No Poll Found' });
         }
+        let currentDate = new Date();
+        if (currentDate > new Date(poll.expirydate)) {
+            return res.status(401).json({ message: 'Poll is expired' })
+        }
 
         if (optionindex < 0 || optionindex >= poll.options.length) {
             return res.status(400).json({ message: 'Invalid option index' });
@@ -71,6 +75,7 @@ export const fetchspecific = async (req, res) => {
         if (!poll) {
             return res.status(400).json({ message: 'Poll not found' });
         }
+
 
         let newdate = new Date();
         if (newdate > new Date(poll.expirydate)) {
